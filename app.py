@@ -2,23 +2,19 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-users = []
+# Dummy data for users
+users = ["John Doe", "Jane Smith", "Alice Johnson"]
 
 @app.route('/')
 def index():
     return render_template('index.html', users=users)
 
-@app.route('/add', methods=['POST'])
+@app.route('/add_user', methods=['POST'])
 def add_user():
-    name = request.form.get('name')
-    if name:
-        users.append(name)
-    return redirect(url_for('index'))
-
-@app.route('/delete/<string:name>', methods=['GET'])
-def delete_user(name):
-    if name in users:
-        users.remove(name)
+    # Get the username from the form
+    new_user = request.form.get('username')
+    if new_user:
+        users.append(new_user)
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
